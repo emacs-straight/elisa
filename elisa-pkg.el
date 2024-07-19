@@ -1,0 +1,2 @@
+;; Generated package description from elisa.el  -*- no-byte-compile: t -*-
+(define-package "elisa" "1.0.3.0.20240718.110325" "Emacs Lisp Information System Assistant" '((emacs "29.2") (ellama "0.11.2") (llm "0.9.1") (async "1.9.8") (plz "0.9")) :commit "556ca46cb9857583d401238ddb591af81b35e0a0" :authors '(("Sergey Kostyaev" . "sskostyaev@gmail.com")) :maintainer '("Sergey Kostyaev" . "sskostyaev@gmail.com") :keywords '("help" "local" "tools") :url "http://github.com/s-kostyaev/elisa")
