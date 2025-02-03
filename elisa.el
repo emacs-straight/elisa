@@ -6,7 +6,7 @@
 ;; URL: http://github.com/s-kostyaev/elisa
 ;; Keywords: help local tools
 ;; Package-Requires: ((emacs "29.2") (ellama "0.11.2") (llm "0.18.1") (async "1.9.8") (plz "0.9"))
-;; Version: 1.1.5
+;; Version: 1.1.7
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 ;; Created: 18th Feb 2024
 
@@ -117,14 +117,14 @@
 					    (make-llm-ollama
 					     :embedding-model "nomic-embed-text"))
   "Embeddings provider to generate embeddings."
-  :type '(sexp :validate 'llm-standard-provider-p))
+  :type '(sexp :validate llm-standard-provider-p))
 
 (defcustom elisa-chat-provider (progn (require 'llm-ollama)
 				      (make-llm-ollama
 				       :chat-model "sskostyaev/openchat:8k-rag"
 				       :embedding-model "nomic-embed-text"))
   "Chat provider."
-  :type '(sexp :validate 'llm-standard-provider-p))
+  :type '(sexp :validate llm-standard-provider-p))
 
 (defcustom elisa-db-directory (file-truename
 			       (file-name-concat
@@ -483,7 +483,8 @@ Return list of vectors."
     (if (and elisa-batch-embeddings-enabled
 	     (member 'embeddings-batch (llm-capabilities provider)))
 	(let ((batches (seq-partition chunks elisa-batch-size)))
-	  (flatten-list (mapcar (lambda (batch) (llm-batch-embeddings provider batch)) batches)))
+	  (flatten-list (mapcar (lambda (batch) (llm-batch-embeddings provider (vconcat batch)))
+				batches)))
       (mapcar (lambda (chunk) (llm-embedding provider chunk)) chunks))))
 
 (defun elisa-parse-info-manual (name collection-name)
